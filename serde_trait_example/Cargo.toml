@@ -1,0 +1,12 @@
+[package]
+name = "serde_trait_example"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile.release]
+strip = "debuginfo"
