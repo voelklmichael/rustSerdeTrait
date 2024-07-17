@@ -1,4 +1,4 @@
-use serde_trait_typeinfo::{TypeInfo, TypeInfoWithRustc};
+use serde_trait_typeinfo::TypeInfoWithRustc;
 
 #[derive(Debug, Default)]
 pub struct ExactResolver;
@@ -6,7 +6,7 @@ pub struct ExactResolver;
 #[derive(Debug)]
 pub enum ExactResolverError {
     TooManyPossibilities {
-        request: TypeInfo,
+        request: TypeInfoWithRustc,
         possibles: Vec<TypeInfoWithRustc>,
     },
 }
@@ -14,13 +14,13 @@ pub enum ExactResolverError {
 impl super::RegistryConflictResolver for ExactResolver {
     type Error = ExactResolverError;
 
-    fn check(&self, type_request: &TypeInfo, type_info: &TypeInfo) -> bool {
+    fn check(&self, type_request: &TypeInfoWithRustc, type_info: &TypeInfoWithRustc) -> bool {
         type_request == type_info
     }
 
     fn resolve<'a, T>(
         &self,
-        type_request: &TypeInfo,
+        type_request: &TypeInfoWithRustc,
         possibles: Vec<(&'a TypeInfoWithRustc, &T)>,
     ) -> Result<Option<&'a T>, Self::Error> {
         Err(ExactResolverError::TooManyPossibilities {

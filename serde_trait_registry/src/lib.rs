@@ -10,7 +10,7 @@ pub struct RegistryInternal<T> {
 impl<T> RegistryInternal<T> {
     pub fn get<Resolver: RegistryConflictResolver>(
         &self,
-        type_request: &TypeInfo,
+        type_request: &TypeInfoWithRustc,
         resolver: &Resolver,
     ) -> Result<Option<&T>, Resolver::Error> {
         let possibles = self
@@ -18,7 +18,7 @@ impl<T> RegistryInternal<T> {
             .iter()
             .filter_map(|(type_info, value)| {
                 resolver
-                    .check(&type_info.type_info, type_request)
+                    .check(type_info, type_request)
                     .then_some((type_info, value))
             })
             .collect::<Vec<_>>();
@@ -37,10 +37,10 @@ impl<T> RegistryInternal<T> {
 
 pub trait RegistryConflictResolver {
     type Error;
-    fn check(&self, type_request: &TypeInfo, type_info: &TypeInfo) -> bool;
+    fn check(&self, type_request: &TypeInfoWithRustc, type_info: &TypeInfoWithRustc) -> bool;
     fn resolve<'a, T>(
         &self,
-        type_request: &TypeInfo,
+        type_request: &TypeInfoWithRustc,
         possibles: Vec<(&'a TypeInfoWithRustc, &T)>,
     ) -> Result<Option<&'a T>, Self::Error>;
 }
