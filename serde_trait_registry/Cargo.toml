@@ -1,0 +1,8 @@
+[package]
+name = "serde_trait_registry"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde_trait_typeinfo = { path = "../serde_trait_typeinfo" }
+rustc-hash = "2.0.0"

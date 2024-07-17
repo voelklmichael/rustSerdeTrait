@@ -1,0 +1,9 @@
+[workspace]
+members = [
+    "serde_trait_typeinfo",
+    "serde_trait_registry",
+    "serde_trait_example",
+    "serde_trait_libloading",
+]
+
+resolver = "2"
