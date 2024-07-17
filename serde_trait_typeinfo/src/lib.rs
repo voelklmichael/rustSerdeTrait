@@ -11,4 +11,5 @@ pub struct TypeInfo {
 pub struct TypeInfoWithRustc {
     pub type_info: TypeInfo,
     pub rustc_version: String,
+    pub build_timestamp: String,
 }
